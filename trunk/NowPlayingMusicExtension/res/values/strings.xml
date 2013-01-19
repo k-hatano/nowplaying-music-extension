@@ -14,13 +14,14 @@
     <string name="cancel">Cancel</string>
     <string name="error">Error</string>
     <string name="error_message">Sorry, sharing the playing song failed.</string>
-    <string name="edit_template">Edit Template</string>
+    <string name="edit_template">Settings</string>
     <string name="ok">OK</string>
     <string name="close">Close</string>
     <string name="hello_world">Hello world!</string>
     <string name="menu_settings">Settings</string>
     <string name="title_activity_preferences">Preferences</string>
     <string name="template_explain">$t and $a will be replaced to title and artist of song.</string>
-    <string name="template">Template of text</string>
+    <string name="template">Template of Text</string>
+    <string name="revert">Revert to default</string>
 
 </resources>

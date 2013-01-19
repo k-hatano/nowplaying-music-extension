@@ -18,6 +18,7 @@ public class PreferencesActivity extends Activity implements OnClickListener {
 		setContentView(R.layout.activity_preferences);
 		
 		initForm();
+		findViewById(R.id.revert).setOnClickListener(this);
 		findViewById(R.id.ok).setOnClickListener(this);
 	}
 	
@@ -43,6 +44,8 @@ public class PreferencesActivity extends Activity implements OnClickListener {
 			editor.putString(KEY_TEXT,((EditText)findViewById(R.id.templete)).getText().toString());
 			editor.commit();
 			finish();
+		}else if(v==(View)findViewById(R.id.revert)){
+			((EditText)findViewById(R.id.templete)).setText(getString(R.string.content_default));
 		}
 	}
 

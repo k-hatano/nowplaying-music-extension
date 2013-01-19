@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- The name of the application as a whole -->
+    <string name="app_name">NowPlaying Music Extension</string>
+
+    <!-- This text is shown in the lists of infinite music extension as a description of the extension -->
+    <string name="description">再生中の曲を共有する</string>
+    <string name="tweet">ツイート</string>
+    <string name="content_default">♪ $t - $a #nowplaying</string>
+    <string name="share">共有</string>
+    <string name="share_text">テキストを共有</string>
+    <string name="share_music_file">ミュージックファイルを共有</string>
+    <string name="cancel">キャンセル</string>
+    <string name="error">エラー</string>
+    <string name="error_message">曲の共有に失敗しました。</string>
+    <string name="edit_template">設定</string>
+    <string name="ok">OK</string>
+    <string name="close">閉じる</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="menu_settings">設定</string>
+    <string name="title_activity_preferences">設定</string>
+    <string name="template_explain">$t は曲のタイトル、$a はアーティスト名に置き換わります。</string>
+    <string name="template">テキストのテンプレート</string>
+    <string name="revert">初期値に戻す</string>
+
+</resources>
