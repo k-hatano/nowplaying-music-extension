@@ -15,37 +15,49 @@
  * limitations under the License.
  *
  *
- -->
+-->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-      package="jp.nita.NowPlayingMusicExtension"
-      android:versionCode="1"
-      android:versionName="1.0">
+    package="jp.nita.NowPlayingMusicExtension"
+    android:versionCode="1"
+    android:versionName="1.0" >
 
     <!-- Permission required for all infinite extensions -->
-    <uses-permission android:name="com.sonyericsson.media.permission.INFINITE_ACCESS"/>
+    <uses-permission android:name="com.sonyericsson.media.permission.INFINITE_ACCESS" />
 
-    <application android:icon="@drawable/extension_default" android:label="@string/app_name">
-
+    <application
+        android:icon="@drawable/extension_default"
+        android:label="@string/app_name" >
         <uses-library android:name="com.sonyericsson.media.infinite.extension_1" />
-        <!-- Activity that will be started when user selects this infinite extension,
-        @drawable/icon will be used as icon for this extension in the extension list -->
-        <activity android:icon="@drawable/extension_default" android:name=".ExtensionActivity" >
+        <!--
+        Activity that will be started when user selects this infinite extension,
+        @drawable/icon will be used as icon for this extension in the extension list
+        -->
+        <activity
+            android:name="jp.nita.NowPlayingMusicExtension.ExtensionActivity"
+            android:icon="@drawable/extension_default" >
             <intent-filter>
                 <action android:name="com.sonyericsson.media.infinite.ACTION_VIEW_INFINITE" />
-               <!-- Mime type should be set to audio/* for Music Extensions -->
-               <data android:mimeType="audio/*" />
+                <!-- Mime type should be set to audio/* for Music Extensions -->
+                <data android:mimeType="audio/*" />
             </intent-filter>
         </activity>
 
-        <!-- Receiver for registering a description text that
-        will be shown in the extension list together with the activity icon  -->
-        <receiver android:name=".ExtensionReceiver">
+        <!--
+        Receiver for registering a description text that
+        will be shown in the extension list together with the activity icon
+        -->
+        <receiver android:name="jp.nita.NowPlayingMusicExtension.ExtensionReceiver" >
             <intent-filter>
                 <action android:name="com.sonyericsson.media.infinite.ACTION_GET_DETAILS" />
             </intent-filter>
         </receiver>
 
+        <activity
+            android:name="jp.nita.NowPlayingMusicExtension.PreferencesActivity"
+            android:label="@string/title_activity_preferences" >
+        </activity>
     </application>
+
     <uses-sdk android:minSdkVersion="9" />
 
 </manifest>

@@ -58,6 +58,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/linearLayout1"
@@ -80,19 +81,20 @@
             android:layout_height="wrap_content"
             android:text="@string/share" />
     </LinearLayout>
-    
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:layout_below="@+id/linearLayout2"
+        android:layout_centerHorizontal="true"
         android:layout_margin="@dimen/spacing"
-        android:padding="@dimen/spacing"  >
-        
-     	<Button
+        android:padding="@dimen/spacing" >
+
+        <Button
             android:id="@+id/cancel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/cancel" />
+            android:text="@string/close" />
     </RelativeLayout>
 
 </RelativeLayout>
