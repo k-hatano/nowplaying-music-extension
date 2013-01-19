@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- The name of the application as a whole -->
+    <string name="app_name">NowPlaying Music Extension</string>
+
+    <!-- This text is shown in the lists of infinite music extension as a description of the extension -->
+    <string name="description">Share Playing Song</string>
+    <string name="tweet">Tweet</string>
+    <string name="content_default">Now Playing $t by $a #nowplaying</string>
+    <string name="share">Share</string>
+    <string name="share_text">Share Text</string>
+    <string name="share_music_file">Share Music File</string>
+    <string name="cancel">Close</string>
+    <string name="error">Error</string>
+    <string name="error_message">Sorry, sharing the playing song failed.</string>
+</resources>
