@@ -86,6 +86,7 @@ public class ExtensionActivity extends Activity implements OnClickListener {
 
 					tweetContent=tweetContent.replace("$t",trackCursor.getString(trackCursor.getColumnIndexOrThrow(MediaStore.Audio.Media.TITLE)));
 					tweetContent=tweetContent.replace("$a",trackCursor.getString(trackCursor.getColumnIndexOrThrow(MediaStore.Audio.Media.ARTIST)));
+					tweetContent=tweetContent.replace("$l",trackCursor.getString(trackCursor.getColumnIndexOrThrow(MediaStore.Audio.Media.ALBUM)));
 					uri=trackCursor.getString(trackCursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DATA));
 
 					((TextView)findViewById(R.id.textField)).setText(tweetContent);

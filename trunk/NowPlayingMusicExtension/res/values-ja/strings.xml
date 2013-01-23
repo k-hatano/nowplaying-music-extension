@@ -20,7 +20,7 @@
     <string name="hello_world">Hello world!</string>
     <string name="menu_settings">設定</string>
     <string name="title_activity_preferences">設定</string>
-    <string name="template_explain">$t は曲のタイトル、$a はアーティスト名に置き換わります。</string>
+    <string name="template_explain">$t は曲のタイトル、$a はアーティスト名、$lはアルバム名に置き換わります。</string>
     <string name="template">テキストのテンプレート</string>
     <string name="revert">初期値に戻す</string>
 
