@@ -18,14 +18,14 @@
 -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="jp.nita.NowPlayingMusicExtension"
-    android:versionCode="2"
-    android:versionName="1.01" android:installLocation="auto">
+    android:versionCode="3"
+    android:versionName="1.02" android:installLocation="auto">
 
     <!-- Permission required for all infinite extensions -->
     <uses-permission android:name="com.sonyericsson.media.permission.INFINITE_ACCESS" />
 
     <application
-        android:icon="@drawable/extension_default"
+        android:icon="@drawable/extension_icon"
         android:label="@string/app_name" >
         <uses-library android:name="com.sonyericsson.media.infinite.extension_1" />
         <!--
@@ -34,7 +34,7 @@
         -->
         <activity
             android:name="jp.nita.NowPlayingMusicExtension.ExtensionActivity"
-            android:icon="@drawable/extension_default" >
+            android:icon="@drawable/extension_icon" >
             <intent-filter>
                 <action android:name="com.sonyericsson.media.infinite.ACTION_VIEW_INFINITE" />
                 <!-- Mime type should be set to audio/* for Music Extensions -->
