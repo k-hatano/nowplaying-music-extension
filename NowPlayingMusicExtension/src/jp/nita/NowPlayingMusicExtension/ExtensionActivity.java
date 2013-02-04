@@ -26,6 +26,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.text.format.Time;
 import android.util.Log;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -56,6 +57,7 @@ public class ExtensionActivity extends Activity implements OnClickListener {
 		initForm();
 
 		findViewById(R.id.tweet).setOnClickListener(this);
+		findViewById(R.id.edit).setOnClickListener(this);
 		findViewById(R.id.share).setOnClickListener(this);
 		findViewById(R.id.cancel).setOnClickListener(this);
 
@@ -72,7 +74,8 @@ public class ExtensionActivity extends Activity implements OnClickListener {
 				trackUri,
 				new String[] {
 						MediaStore.Audio.Media.TITLE, MediaStore.Audio.Media.ARTIST,
-						MediaStore.Audio.Media.ALBUM, MediaStore.Audio.Media.DATA
+						MediaStore.Audio.Media.ALBUM, MediaStore.Audio.Media.DURATION,
+						MediaStore.Audio.Media.DATA
 				}, null, null, null);
 
 		if (trackCursor != null) {
@@ -84,9 +87,14 @@ public class ExtensionActivity extends Activity implements OnClickListener {
 					SharedPreferences pref=getSharedPreferences(PREF_KEY,Activity.MODE_PRIVATE);
 					tweetContent=pref.getString(KEY_TEXT,getString(R.string.content_default));
 
+					Time time = new Time();
+	                time.set(trackCursor.getLong(trackCursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DURATION)));
+	                String duration=time.format("%M:%S");
+					
 					tweetContent=tweetContent.replace("$t",trackCursor.getString(trackCursor.getColumnIndexOrThrow(MediaStore.Audio.Media.TITLE)));
 					tweetContent=tweetContent.replace("$a",trackCursor.getString(trackCursor.getColumnIndexOrThrow(MediaStore.Audio.Media.ARTIST)));
 					tweetContent=tweetContent.replace("$l",trackCursor.getString(trackCursor.getColumnIndexOrThrow(MediaStore.Audio.Media.ALBUM)));
+					tweetContent=tweetContent.replace("$d",duration);
 					uri=trackCursor.getString(trackCursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DATA));
 
 					((TextView)findViewById(R.id.textField)).setText(tweetContent);
@@ -119,6 +127,10 @@ public class ExtensionActivity extends Activity implements OnClickListener {
 				Log.d("ExampleExtensionActivity", "Error");
 				e.printStackTrace();
 			}
+		}else if(arg0==(View)findViewById(R.id.edit)){
+			Intent intent=new Intent(this,PreferencesActivity.class);
+			intent.setAction(Intent.ACTION_VIEW);
+			startActivity(intent);
 		}else if(arg0==(View)findViewById(R.id.share)){
 			try {
 				Uri trackUri = getIntent().getData();
