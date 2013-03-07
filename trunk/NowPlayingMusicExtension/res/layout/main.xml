@@ -50,10 +50,7 @@
                 android:ems="10"
                 android:gravity="top"
                 android:inputType="textMultiLine"
-                android:lines="3" >
-
-                <requestFocus />
-            </EditText>
+                android:lines="3" />
 
             <TableLayout
                 android:layout_width="match_parent"
@@ -61,10 +58,10 @@
                 android:stretchColumns="0,1" >
                 <TableRow>
                     <Button
-                        android:id="@+id/edit"
+                        android:id="@+id/apply"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/edit_template" />
+                        android:text="@string/apply_template" />
 
                     <Button
                         android:id="@+id/tweet"
