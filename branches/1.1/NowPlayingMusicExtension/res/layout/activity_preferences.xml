@@ -1,0 +1,159 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/scrollView1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <RelativeLayout
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:context=".Preferences" >
+
+        <LinearLayout
+            android:id="@+id/linearLayout1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_margin="@dimen/spacing"
+            android:background="@color/darkgray"
+            android:orientation="vertical"
+            android:padding="@dimen/spacing" >
+
+            <TextView
+                android:id="@+id/textView1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/template_of_text"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:stretchColumns="1" >
+
+                <TableRow>
+
+                    <TextView
+                        android:id="@+id/label1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="8dp"
+                        android:text="1"
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                    <EditText
+                        android:id="@+id/templete1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ems="10"
+                        android:gravity="top"
+                        android:inputType="textMultiLine"
+                        android:lines="2" />
+
+                </TableRow>
+
+            </TableLayout>
+            
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:stretchColumns="1" >
+
+                <TableRow>
+
+                    <TextView
+                        android:id="@+id/label2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="8dp"
+                        android:text="2"
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                    <EditText
+                        android:id="@+id/templete2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ems="10"
+                        android:gravity="top"
+                        android:inputType="textMultiLine"
+                        android:lines="2" />
+
+                </TableRow>
+
+            </TableLayout>
+            
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:stretchColumns="1" >
+
+                <TableRow>
+
+                    <TextView
+                        android:id="@+id/label3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="8dp"
+                        android:text="3"
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                    <EditText
+                        android:id="@+id/templete3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ems="10"
+                        android:gravity="top"
+                        android:inputType="textMultiLine"
+                        android:lines="2" />
+
+                </TableRow>
+
+            </TableLayout>
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/template_explain" />
+
+            <Button
+                android:id="@+id/revert"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/revert" />
+        </LinearLayout>
+        
+        <LinearLayout
+            android:id="@+id/auto_quit_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/linearLayout1" >
+
+            <CheckBox
+            android:id="@+id/quit_after_sharing"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/spacing"
+            android:text="@string/quit_after_sharing" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_below="@+id/auto_quit_layout"
+            android:layout_margin="@dimen/spacing"
+            android:gravity="top"
+            android:padding="@dimen/spacing" >
+
+            <Button
+                android:id="@+id/ok"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/ok" />
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</ScrollView>
