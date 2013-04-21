@@ -16,9 +16,14 @@
  */
 package jp.nita.NowPlayingMusicExtension;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.net.MalformedURLException;
+
 import jp.nita.NowPlayingMusicExtension.R;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -32,15 +37,27 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.inputmethod.InputMethodManager;
 import android.webkit.MimeTypeMap;
 import android.widget.TextView;
+import com.facebook.android.*;
+import com.facebook.android.AsyncFacebookRunner.*;
+import com.facebook.android.Facebook.*;
 
+@SuppressWarnings("deprecation")
 public class ExtensionActivity extends Activity implements OnClickListener {
+	private static final String ApiKey = "508033875922009";
+	
 	private static final String PREF_KEY = "NowPlayingMusicExtension";  
 	private static final String KEY_TEXT_1 = "templete";
 	private static final String KEY_TEXT_2 = "templete2";
 	private static final String KEY_TEXT_3 = "templete3";
-	private static final String KEY_TEXT_QUIT = "quitAfterSharing"; 
+	private static final String KEY_TEXT_QUIT = "quitAfterSharing";
+	
+	private static final int PICKUP_SEND_TO_APP = 1;
+	
+	private Facebook facebook = null;
+	private AsyncFacebookRunner asyncFbRunner = null;
 	
 	Uri trackUri;
 	String uri;
@@ -61,6 +78,9 @@ public class ExtensionActivity extends Activity implements OnClickListener {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
+		
+		facebook = new Facebook(ApiKey);
+	    asyncFbRunner = new AsyncFacebookRunner(facebook);
 
 		Intent intent = getIntent();
 
@@ -75,6 +95,8 @@ public class ExtensionActivity extends Activity implements OnClickListener {
 		findViewById(R.id.apply).setOnClickListener(this);
 		findViewById(R.id.share).setOnClickListener(this);
 		findViewById(R.id.cancel).setOnClickListener(this);
+		findViewById(R.id.settings).setOnClickListener(this);
+		findViewById(R.id.facebook).setOnClickListener(this);
 
 	}
 	
@@ -167,6 +189,7 @@ public class ExtensionActivity extends Activity implements OnClickListener {
 	@Override
 	public boolean onCreateOptionsMenu(android.view.Menu menu) {
 		super.onCreateOptionsMenu(menu);
+		((InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.menu, menu);
 		return true;
@@ -174,14 +197,14 @@ public class ExtensionActivity extends Activity implements OnClickListener {
 
 	@Override
 	public void onClick(View arg0) {
+		((InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
 		if(arg0==(View)findViewById(R.id.tweet)){
 			try {
 				Intent intent = new Intent();
 				intent.setAction(Intent.ACTION_SEND);
 				intent.setType("text/plain");
 				intent.putExtra(Intent.EXTRA_TEXT, ((TextView)findViewById(R.id.textField)).getText().toString());
-				startActivity(intent);
-				if(quitAfterSharing) finish();
+				startActivityForResult(intent,PICKUP_SEND_TO_APP);
 			} catch (Exception e) {
 				Log.d("ExampleExtensionActivity", "Error");
 				e.printStackTrace();
@@ -228,14 +251,76 @@ public class ExtensionActivity extends Activity implements OnClickListener {
 				intent.setAction(Intent.ACTION_SEND);
 				intent.setType(type);
 				intent.putExtra(Intent.EXTRA_STREAM, trackUri);
-				startActivity(intent);
-				if(quitAfterSharing) finish();
+				startActivityForResult(intent,PICKUP_SEND_TO_APP);
 			} catch (Exception e) {
 				Log.d("ExampleExtensionActivity", "Error");
 				e.printStackTrace();
 			}
 		}else if(arg0==(View)findViewById(R.id.cancel)){
 			finish();
+		}else if(arg0==(View)findViewById(R.id.settings)){
+			Intent intent=new Intent(this,PreferencesActivity.class);
+			intent.setAction(Intent.ACTION_VIEW);
+			startActivity(intent);
+		}else if(arg0==(View)findViewById(R.id.facebook)){
+			facebook.authorize(ExtensionActivity.this
+                    , new String[] {"publish_stream"}
+                    , new DialogListener(){
+				@Override
+                public void onComplete(Bundle values) {
+                    CharSequence postStr = ((TextView)findViewById(R.id.textField)).getText().toString();
+                    Bundle params = new Bundle();
+                    params.putString("message",postStr.toString());
+                        asyncFbRunner.request("me/feed",params,"POST", new PostRequestListener(), null);
+                }
+
+                @Override
+                public void onFacebookError(FacebookError e) {
+
+                }
+
+                @Override
+                public void onError(DialogError e) {
+
+                }
+
+                @Override
+                public void onCancel() {
+
+                }
+			});
+		}
+	}
+	
+	public class PostRequestListener implements AsyncFacebookRunner.RequestListener{
+	    @Override
+	    public void onFacebookError(FacebookError e, Object state) {
+	        // Facebook側でのエラー発生時に呼ばれる
+	    }
+	 
+	    @Override
+	    public void onComplete(String response, Object state) {
+	        // requestに対してresponseが返された場合に呼ばれる
+	    }
+
+		@Override
+		public void onIOException(IOException e, Object state) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void onFileNotFoundException(FileNotFoundException e,
+				Object state) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void onMalformedURLException(MalformedURLException e,
+				Object state) {
+			// TODO Auto-generated method stub
+			
 		}
 	}
 
@@ -256,6 +341,7 @@ public class ExtensionActivity extends Activity implements OnClickListener {
 	//メニューのアイテムが選択された際に起動される。
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
+		((InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
 		switch (item.getItemId()) {
 		case R.id.edit_template:
 			Intent intent=new Intent(this,PreferencesActivity.class);
@@ -263,6 +349,13 @@ public class ExtensionActivity extends Activity implements OnClickListener {
 			startActivity(intent);
 		}
 		return true;
+	}
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data){
+		if(requestCode==PICKUP_SEND_TO_APP){
+			if(quitAfterSharing) finish();	
+		}
 	}
 
 }

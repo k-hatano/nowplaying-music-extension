@@ -3,11 +3,13 @@ package jp.nita.NowPlayingMusicExtension;
 import android.os.Bundle;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.*;
 
 public class PreferencesActivity extends Activity implements OnClickListener {
@@ -67,6 +69,7 @@ public class PreferencesActivity extends Activity implements OnClickListener {
 
 	@Override
 	public void onClick(View v) {
+		((InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
 		if(v==(View)findViewById(R.id.ok)){
 			savePrefs();
 			finish();

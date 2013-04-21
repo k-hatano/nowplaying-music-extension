@@ -3,7 +3,7 @@
 
     <item
         android:id="@+id/edit_template"
-        android:title="@string/menu_settings">
+        android:title="@string/menu_settings" android:icon="@android:drawable/ic_menu_preferences">
     </item>
 
 </menu>

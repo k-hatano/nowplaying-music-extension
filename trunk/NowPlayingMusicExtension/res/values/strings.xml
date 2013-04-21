@@ -30,5 +30,7 @@
     <string name="confirm_revert">Are you sure you want to revert templates to default?</string>
     <string name="content_default_2">#NowPlaying $t / $a ($d)</string>
     <string name="content_default_3">Listening to $t ($l) by $a #NowPlaying</string>
+    <string name="post_to_facebook">Post to Facebook</string>
+    <string name="send_to_app">Send to App</string>
 
 </resources>

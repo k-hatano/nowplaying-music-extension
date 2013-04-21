@@ -52,24 +52,31 @@
                 android:inputType="textMultiLine"
                 android:lines="3" />
 
+            <Button
+                android:id="@+id/apply"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/apply_template" />
+
             <TableLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:stretchColumns="0,1" >
+
                 <TableRow>
+
                     <Button
-                        android:id="@+id/apply"
+                        android:id="@+id/facebook"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/apply_template" />
+                        android:text="@string/post_to_facebook" />
 
                     <Button
                         android:id="@+id/tweet"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/share" />
+                        android:text="@string/send_to_app" />
                 </TableRow>
-
             </TableLayout>
         </LinearLayout>
 
@@ -95,7 +102,7 @@
                 android:id="@+id/share"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/share" />
+                android:text="@string/send_to_app" />
         </LinearLayout>
 
         <RelativeLayout
@@ -107,11 +114,26 @@
             android:layout_margin="@dimen/spacing"
             android:padding="@dimen/spacing" >
 
-            <Button
-                android:id="@+id/cancel"
+            <TableLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/close" />
+                android:stretchColumns="0,1" >
+
+                <TableRow>
+
+                    <Button
+                        android:id="@+id/settings"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/menu_settings" />
+
+                    <Button
+                        android:id="@+id/cancel"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/close" />
+                </TableRow>
+            </TableLayout>
         </RelativeLayout>
     </RelativeLayout>
 
