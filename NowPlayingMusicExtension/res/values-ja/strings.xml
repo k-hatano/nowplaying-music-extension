@@ -32,5 +32,8 @@
     <string name="content_default_3">Listening to $t ($l) by $a #NowPlaying</string>
     <string name="post_to_facebook">Facebookに投稿</string>
     <string name="send_to_app">アプリに送信</string>
+    <string name="error_facebook">Facebookへ投稿中にエラーが発生しました。</string>
+    <string name="complete">完了</string>
+    <string name="posting_completed">投稿が完了しました。</string>
 
 </resources>
