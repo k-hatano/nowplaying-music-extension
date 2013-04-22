@@ -46,28 +46,28 @@ import com.facebook.android.Facebook.*;
 @SuppressWarnings("deprecation")
 public class ExtensionActivity extends Activity implements OnClickListener {
 	private static final String ApiKey = "508033875922009";
-	
+
 	private static final String PREF_KEY = "NowPlayingMusicExtension";  
 	private static final String KEY_TEXT_1 = "templete";
 	private static final String KEY_TEXT_2 = "templete2";
 	private static final String KEY_TEXT_3 = "templete3";
 	private static final String KEY_TEXT_QUIT = "quitAfterSharing";
-	
+
 	private static final int PICKUP_SEND_TO_APP = 1;
-	
+
 	private Facebook facebook = null;
 	private AsyncFacebookRunner asyncFbRunner = null;
-	
+
 	Uri trackUri;
 	String uri;
-	
+
 	String title;
 	String artist;
 	String album;
 	String duration;
 	String composer;
 	String year;
-	
+
 	String template1;
 	String template2;
 	String template3;
@@ -77,9 +77,9 @@ public class ExtensionActivity extends Activity implements OnClickListener {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
-		
+
 		facebook = new Facebook(ApiKey);
-	    asyncFbRunner = new AsyncFacebookRunner(facebook);
+		asyncFbRunner = new AsyncFacebookRunner(facebook);
 
 		Intent intent = getIntent();
 
@@ -98,7 +98,7 @@ public class ExtensionActivity extends Activity implements OnClickListener {
 		findViewById(R.id.facebook).setOnClickListener(this);
 
 	}
-	
+
 	@Override
 	public void onResume(){
 		super.onResume();
@@ -122,59 +122,57 @@ public class ExtensionActivity extends Activity implements OnClickListener {
 					// And retrieve the wanted information
 					String tweetContent;
 					SharedPreferences pref=getSharedPreferences(PREF_KEY,Activity.MODE_PRIVATE);
-					
+
 					template1=pref.getString(KEY_TEXT_1,getString(R.string.content_default));
 					template2=pref.getString(KEY_TEXT_2,getString(R.string.content_default_2));
 					template3=pref.getString(KEY_TEXT_3,getString(R.string.content_default_3));
 					quitAfterSharing=pref.getBoolean(KEY_TEXT_QUIT,false);
-					
+
 					tweetContent=pref.getString(KEY_TEXT_1,getString(R.string.content_default));
 
 					Time time = new Time();
-	                time.set(trackCursor.getLong(trackCursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DURATION)));
-	                duration=time.format("%M:%S");
-					
-	                try{
-	                	title=trackCursor.getString(trackCursor.getColumnIndexOrThrow(MediaStore.Audio.Media.TITLE));
-	                }finally{
-	                	if(title==null) title="";
-	                }
-	                try{
-	                	artist=trackCursor.getString(trackCursor.getColumnIndexOrThrow(MediaStore.Audio.Media.ARTIST));
-	                }finally{
-	                	if(artist==null) artist="";
-	                }
-	                try{
-	                	album=trackCursor.getString(trackCursor.getColumnIndexOrThrow(MediaStore.Audio.Media.ALBUM));
-	                }finally{
-	                	if(album==null) album="";
-	                }
-	                try{
-	                	uri=trackCursor.getString(trackCursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DATA));
-	                }finally{
-	                	if(uri==null) uri="";
-	                }
-	                try{
-	                	composer=trackCursor.getString(trackCursor.getColumnIndexOrThrow(MediaStore.Audio.Media.COMPOSER));
-	                }finally{
-	                	if(composer==null) composer="";
-	                }
-	                try{
-	                	year=trackCursor.getString(trackCursor.getColumnIndexOrThrow(MediaStore.Audio.Media.YEAR));
-	                }finally{
-	                	if(year==null) year="";
-	                }
+					time.set(trackCursor.getLong(trackCursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DURATION)));
+					duration=time.format("%M:%S");
 
+					try{
+						title=trackCursor.getString(trackCursor.getColumnIndexOrThrow(MediaStore.Audio.Media.TITLE));
+					}finally{
+						if(title==null) title="";
+					}
+					try{
+						artist=trackCursor.getString(trackCursor.getColumnIndexOrThrow(MediaStore.Audio.Media.ARTIST));
+					}finally{
+						if(artist==null) artist="";
+					}
+					try{
+						album=trackCursor.getString(trackCursor.getColumnIndexOrThrow(MediaStore.Audio.Media.ALBUM));
+					}finally{
+						if(album==null) album="";
+					}
+					try{
+						uri=trackCursor.getString(trackCursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DATA));
+					}finally{
+						if(uri==null) uri="";
+					}
+					try{
+						composer=trackCursor.getString(trackCursor.getColumnIndexOrThrow(MediaStore.Audio.Media.COMPOSER));
+					}finally{
+						if(composer==null) composer="";
+					}
+					try{
+						year=trackCursor.getString(trackCursor.getColumnIndexOrThrow(MediaStore.Audio.Media.YEAR));
+					}finally{
+						if(year==null) year="";
+					}
 					tweetContent=applyTemplate(tweetContent);
 					((TextView)findViewById(R.id.textField)).setText(tweetContent);
-
 				}
 			} finally {
 				trackCursor.close();
 			}
 		}
 	}
-	
+
 	public String applyTemplate(String param){
 		param=param.replace("$t",title);
 		param=param.replace("$a",artist);
@@ -262,64 +260,59 @@ public class ExtensionActivity extends Activity implements OnClickListener {
 			intent.setAction(Intent.ACTION_VIEW);
 			startActivity(intent);
 		}else if(arg0==(View)findViewById(R.id.facebook)){
-
-            facebook.authorize(ExtensionActivity.this
-                    , new String[] {"publish_stream"}
-                    , new DialogListener(){
-
-						@Override
-						public void onComplete(Bundle values) {
-	                        Bundle params = new Bundle();
-	                        params.putString("message",((TextView)findViewById(R.id.textField)).getText().toString());
-	                            asyncFbRunner.request("me/feed",params,"POST", new PostRequestListener(), null);
-						}
-
-						@Override
-						public void onFacebookError(FacebookError e) {
-							CommonUtils.showDialog(ExtensionActivity.this, getString(R.string.error), getString(R.string.error_facebook));
-						}
-
-						@Override
-						public void onError(DialogError e) {
-							CommonUtils.showDialog(ExtensionActivity.this, getString(R.string.error), getString(R.string.error_facebook));
-						}
-
-						@Override
-						public void onCancel() {
-							// TODO 自動生成されたメソッド・スタブ
-							
-						}
-            }
-            );
+			facebook.authorize(ExtensionActivity.this, new String[] {"publish_actions"}, new DialogListener(){
+				String postText=((TextView)findViewById(R.id.textField)).getText().toString();
+				@Override
+				public void onComplete(Bundle values) {
+					Bundle params = new Bundle();
+					params.putString("message",postText);
+					Log.i("onComplete",postText);
+					asyncFbRunner.request("me/feed",params,"POST", new PostRequestListener(), null);
+				}
+				@Override
+				public void onFacebookError(FacebookError e) {
+					Log.e("onFacebookError", e.toString());
+				}
+				@Override
+				public void onError(DialogError e) {
+					Log.e("onError", e.toString());
+				}
+				@Override
+				public void onCancel() {
+					// TODO 自動生成されたメソッド・スタブ
+				}
+			}
+					);
 		}
+
 	}
-	
+
 	public class PostRequestListener implements AsyncFacebookRunner.RequestListener{
-	    @Override
-	    public void onFacebookError(FacebookError e, Object state) {
-	        CommonUtils.showDialog(ExtensionActivity.this, getString(R.string.error), getString(R.string.error_facebook));
-	    }
-	 
-	    @Override
-	    public void onComplete(String response, Object state) {
-	    	CommonUtils.showDialog(ExtensionActivity.this, getString(R.string.complete), getString(R.string.posting_completed));
-	    }
+		@Override
+		public void onFacebookError(FacebookError e, Object state) {
+			Log.e("onFacebookError", e.toString());
+		}
+
+		@Override
+		public void onComplete(String response, Object state) {
+			Log.i("onComplete", response);
+		}
 
 		@Override
 		public void onIOException(IOException e, Object state) {
-			CommonUtils.showDialog(ExtensionActivity.this, getString(R.string.error), getString(R.string.error_facebook));
+			Log.e("onIOException", e.toString());
 		}
 
 		@Override
 		public void onFileNotFoundException(FileNotFoundException e,
 				Object state) {
-			CommonUtils.showDialog(ExtensionActivity.this, getString(R.string.error), getString(R.string.error_facebook));
+			Log.e("onFileNotFoundException", e.toString());
 		}
 
 		@Override
 		public void onMalformedURLException(MalformedURLException e,
 				Object state) {
-			CommonUtils.showDialog(ExtensionActivity.this, getString(R.string.error), getString(R.string.error_facebook));
+			Log.e("onMalformedURLException", e.toString());
 		}
 	}
 
@@ -349,11 +342,14 @@ public class ExtensionActivity extends Activity implements OnClickListener {
 		}
 		return true;
 	}
-	
+
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data){
+		super.onActivityResult(requestCode,resultCode,data);
 		if(requestCode==PICKUP_SEND_TO_APP){
 			if(quitAfterSharing) finish();	
+		}else{
+			facebook.authorizeCallback(requestCode, resultCode, data);
 		}
 	}
 

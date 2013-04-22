@@ -23,6 +23,7 @@
 
     <!-- Permission required for all infinite extensions -->
     <uses-permission android:name="com.sonyericsson.media.permission.INFINITE_ACCESS" />
+    <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
         android:icon="@drawable/extension_icon"
