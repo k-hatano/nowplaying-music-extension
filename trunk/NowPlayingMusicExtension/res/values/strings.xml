@@ -32,5 +32,9 @@
     <string name="content_default_3">Listening to $t ($l) by $a #NowPlaying</string>
     <string name="post_to_facebook">Post to Facebook</string>
     <string name="send_to_app">Send to App</string>
+    <string name="error_facebook">An error occurred during posting the text to Facebook.</string>
+    <string name="complete">Complete</string>
+    <string name="posting_completed">Posting Completed.</string>
+    
 
 </resources>

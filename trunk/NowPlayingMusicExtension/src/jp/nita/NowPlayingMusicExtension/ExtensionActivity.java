@@ -41,7 +41,6 @@ import android.view.inputmethod.InputMethodManager;
 import android.webkit.MimeTypeMap;
 import android.widget.TextView;
 import com.facebook.android.*;
-import com.facebook.android.AsyncFacebookRunner.*;
 import com.facebook.android.Facebook.*;
 
 @SuppressWarnings("deprecation")
@@ -263,64 +262,64 @@ public class ExtensionActivity extends Activity implements OnClickListener {
 			intent.setAction(Intent.ACTION_VIEW);
 			startActivity(intent);
 		}else if(arg0==(View)findViewById(R.id.facebook)){
-			facebook.authorize(ExtensionActivity.this
+
+            facebook.authorize(ExtensionActivity.this
                     , new String[] {"publish_stream"}
                     , new DialogListener(){
-				@Override
-                public void onComplete(Bundle values) {
-                    CharSequence postStr = ((TextView)findViewById(R.id.textField)).getText().toString();
-                    Bundle params = new Bundle();
-                    params.putString("message",postStr.toString());
-                        asyncFbRunner.request("me/feed",params,"POST", new PostRequestListener(), null);
-                }
 
-                @Override
-                public void onFacebookError(FacebookError e) {
+						@Override
+						public void onComplete(Bundle values) {
+	                        Bundle params = new Bundle();
+	                        params.putString("message",((TextView)findViewById(R.id.textField)).getText().toString());
+	                            asyncFbRunner.request("me/feed",params,"POST", new PostRequestListener(), null);
+						}
 
-                }
+						@Override
+						public void onFacebookError(FacebookError e) {
+							CommonUtils.showDialog(ExtensionActivity.this, getString(R.string.error), getString(R.string.error_facebook));
+						}
 
-                @Override
-                public void onError(DialogError e) {
+						@Override
+						public void onError(DialogError e) {
+							CommonUtils.showDialog(ExtensionActivity.this, getString(R.string.error), getString(R.string.error_facebook));
+						}
 
-                }
-
-                @Override
-                public void onCancel() {
-
-                }
-			});
+						@Override
+						public void onCancel() {
+							// TODO 自動生成されたメソッド・スタブ
+							
+						}
+            }
+            );
 		}
 	}
 	
 	public class PostRequestListener implements AsyncFacebookRunner.RequestListener{
 	    @Override
 	    public void onFacebookError(FacebookError e, Object state) {
-	        // Facebook側でのエラー発生時に呼ばれる
+	        CommonUtils.showDialog(ExtensionActivity.this, getString(R.string.error), getString(R.string.error_facebook));
 	    }
 	 
 	    @Override
 	    public void onComplete(String response, Object state) {
-	        // requestに対してresponseが返された場合に呼ばれる
+	    	CommonUtils.showDialog(ExtensionActivity.this, getString(R.string.complete), getString(R.string.posting_completed));
 	    }
 
 		@Override
 		public void onIOException(IOException e, Object state) {
-			// TODO Auto-generated method stub
-			
+			CommonUtils.showDialog(ExtensionActivity.this, getString(R.string.error), getString(R.string.error_facebook));
 		}
 
 		@Override
 		public void onFileNotFoundException(FileNotFoundException e,
 				Object state) {
-			// TODO Auto-generated method stub
-			
+			CommonUtils.showDialog(ExtensionActivity.this, getString(R.string.error), getString(R.string.error_facebook));
 		}
 
 		@Override
 		public void onMalformedURLException(MalformedURLException e,
 				Object state) {
-			// TODO Auto-generated method stub
-			
+			CommonUtils.showDialog(ExtensionActivity.this, getString(R.string.error), getString(R.string.error_facebook));
 		}
 	}
 
