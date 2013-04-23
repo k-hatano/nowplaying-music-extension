@@ -5,7 +5,7 @@
     <string name="app_name">NowPlaying Music Extension</string>
 
     <!-- This text is shown in the lists of infinite music extension as a description of the extension -->
-    <string name="description">Share Playing Song</string>
+    <string name="description">Share playing song</string>
     <string name="tweet">Tweet</string>
     <string name="content_default">Now Playing $t by $a #nowplaying</string>
     <string name="share">Share</string>
@@ -32,9 +32,7 @@
     <string name="content_default_3">Listening to $t ($l) by $a #NowPlaying</string>
     <string name="post_to_facebook">Post to Facebook</string>
     <string name="send_to_app">Send to App</string>
-    <string name="error_facebook">An error occurred during posting the text to Facebook.</string>
-    <string name="complete">Complete</string>
-    <string name="posting_completed">Posting Completed.</string>
-    
+    <string name="posting_completed">Posting Completed</string>
+    <string name="posting_failed">Posting Failed</string>
 
 </resources>

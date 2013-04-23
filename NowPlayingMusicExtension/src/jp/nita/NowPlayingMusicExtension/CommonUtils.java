@@ -1,23 +1,21 @@
 package jp.nita.NowPlayingMusicExtension;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
+import android.os.Handler;
+import android.widget.Toast;
 
 public class CommonUtils {
-	public static void showDialog(Context context,String title,String message){
-		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
-		alertDialogBuilder.setTitle(title);
-		alertDialogBuilder.setMessage(message);
-		alertDialogBuilder.setPositiveButton(context.getString(R.string.ok),
-				new DialogInterface.OnClickListener() {
+	public static void showToast(final Context context,final String title){
+		final Handler handler = new Handler();
+		new Thread(new Runnable(){
 			@Override
-			public void onClick(DialogInterface dialog, int which) {
-
+			public void run() {
+				handler.post(new Runnable() {
+					public void run() {
+						Toast.makeText(context, title, Toast.LENGTH_LONG).show();
+					}
+				});
 			}
-		});
-		alertDialogBuilder.setCancelable(true);
-		AlertDialog alertDialog = alertDialogBuilder.create();
-		alertDialog.show();
+		}).start();
 	}
 }

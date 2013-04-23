@@ -26,14 +26,13 @@
     <string name="template_of_text">テキストのテンプレート</string>
     <string name="edit">編集</string>
     <string name="apply_template">テンプレートを適用</string>
-    <string name="quit_after_sharing">共有後に終了する</string>
+    <string name="quit_after_sharing">投稿・送信後に終了する</string>
     <string name="confirm_revert">テンプレートを初期値に戻しますか?</string>
     <string name="content_default_2">#NowPlaying $t / $a ($d)</string>
     <string name="content_default_3">Listening to $t ($l) by $a #NowPlaying</string>
     <string name="post_to_facebook">Facebookに投稿</string>
     <string name="send_to_app">アプリに送信</string>
-    <string name="error_facebook">Facebookへ投稿中にエラーが発生しました。</string>
-    <string name="complete">完了</string>
     <string name="posting_completed">投稿が完了しました。</string>
-
+	<string name="posting_failed">投稿に失敗しました。</string>
+	
 </resources>
