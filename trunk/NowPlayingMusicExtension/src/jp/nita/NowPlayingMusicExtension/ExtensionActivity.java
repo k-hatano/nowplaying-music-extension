@@ -40,6 +40,7 @@ import android.view.View.OnClickListener;
 import android.view.inputmethod.InputMethodManager;
 import android.webkit.MimeTypeMap;
 import android.widget.TextView;
+
 import com.facebook.android.*;
 import com.facebook.android.Facebook.*;
 
@@ -77,7 +78,7 @@ public class ExtensionActivity extends Activity implements OnClickListener {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
-
+		
 		facebook = new Facebook(ApiKey);
 		asyncFbRunner = new AsyncFacebookRunner(facebook);
 
@@ -260,59 +261,63 @@ public class ExtensionActivity extends Activity implements OnClickListener {
 			intent.setAction(Intent.ACTION_VIEW);
 			startActivity(intent);
 		}else if(arg0==(View)findViewById(R.id.facebook)){
-			facebook.authorize(ExtensionActivity.this, new String[] {"publish_actions"}, new DialogListener(){
-				String postText=((TextView)findViewById(R.id.textField)).getText().toString();
+			
+			facebook.authorize(ExtensionActivity.this
+                    , new String[] {"publish_stream"}
+                    , new DialogListener(){
 				@Override
-				public void onComplete(Bundle values) {
-					Bundle params = new Bundle();
-					params.putString("message",postText);
-					Log.i("onComplete",postText);
-					asyncFbRunner.request("me/feed",params,"POST", new PostRequestListener(), null);
-				}
-				@Override
-				public void onFacebookError(FacebookError e) {
-					Log.e("onFacebookError", e.toString());
-				}
-				@Override
-				public void onError(DialogError e) {
-					Log.e("onError", e.toString());
-				}
+                public void onComplete(Bundle values) {
+                    CharSequence postStr = ((TextView)findViewById(R.id.textField)).getText().toString();
+                    Bundle params = new Bundle();
+                    params.putString("message",postStr.toString());
+                        asyncFbRunner.request("me/feed",params,"POST", new PostRequestListener(), null);
+                }
+
+                @Override
+                public void onFacebookError(FacebookError e) {
+                	CommonUtils.showToast(ExtensionActivity.this,getString(R.string.posting_failed));
+                }
+
+                @Override
+                public void onError(DialogError e) {
+                	CommonUtils.showToast(ExtensionActivity.this,getString(R.string.posting_failed));
+                }
+
 				@Override
 				public void onCancel() {
-					// TODO 自動生成されたメソッド・スタブ
+					
 				}
-			}
-					);
+			});
 		}
-
 	}
-
+	
 	public class PostRequestListener implements AsyncFacebookRunner.RequestListener{
-		@Override
-		public void onFacebookError(FacebookError e, Object state) {
-			Log.e("onFacebookError", e.toString());
-		}
-
-		@Override
-		public void onComplete(String response, Object state) {
-			Log.i("onComplete", response);
-		}
+	    @Override
+	    public void onFacebookError(FacebookError e, Object state) {
+	    	CommonUtils.showToast(ExtensionActivity.this,getString(R.string.posting_failed));
+	    }
+	 
+	    @Override
+	    public void onComplete(String response, Object state) {
+	    	CommonUtils.showToast(ExtensionActivity.this,getString(R.string.posting_completed));
+	    	if(quitAfterSharing) ExtensionActivity.this.finish();
+	    }
 
 		@Override
 		public void onIOException(IOException e, Object state) {
-			Log.e("onIOException", e.toString());
+			CommonUtils.showToast(ExtensionActivity.this,getString(R.string.posting_failed));
 		}
 
 		@Override
 		public void onFileNotFoundException(FileNotFoundException e,
 				Object state) {
-			Log.e("onFileNotFoundException", e.toString());
+			CommonUtils.showToast(ExtensionActivity.this,getString(R.string.posting_failed));
 		}
 
 		@Override
 		public void onMalformedURLException(MalformedURLException e,
 				Object state) {
-			Log.e("onMalformedURLException", e.toString());
+			CommonUtils.showToast(ExtensionActivity.this,getString(R.string.posting_failed));
 		}
 	}
 
@@ -334,8 +339,7 @@ public class ExtensionActivity extends Activity implements OnClickListener {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		((InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
-		switch (item.getItemId()) {
-		case R.id.edit_template:
+		if(item.getItemId()==R.id.edit_template){
 			Intent intent=new Intent(this,PreferencesActivity.class);
 			intent.setAction(Intent.ACTION_VIEW);
 			startActivity(intent);
