@@ -30,6 +30,7 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.text.format.Time;
 import android.util.Log;
@@ -40,12 +41,15 @@ import android.view.View.OnClickListener;
 import android.view.inputmethod.InputMethodManager;
 import android.webkit.MimeTypeMap;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.facebook.android.*;
 import com.facebook.android.Facebook.*;
 
 @SuppressWarnings("deprecation")
 public class ExtensionActivity extends Activity implements OnClickListener {
+	final static Handler handler = new Handler();
+	
 	private static final String ApiKey = "508033875922009";
 
 	private static final String PREF_KEY = "NowPlayingMusicExtension";  
@@ -103,7 +107,6 @@ public class ExtensionActivity extends Activity implements OnClickListener {
 	@Override
 	public void onResume(){
 		super.onResume();
-		initForm();
 	}
 
 	public void initForm(){
@@ -267,20 +270,21 @@ public class ExtensionActivity extends Activity implements OnClickListener {
                     , new DialogListener(){
 				@Override
                 public void onComplete(Bundle values) {
-                    CharSequence postStr = ((TextView)findViewById(R.id.textField)).getText().toString();
+					String postStr = ((TextView)findViewById(R.id.textField)).getText().toString();
+					
                     Bundle params = new Bundle();
-                    params.putString("message",postStr.toString());
+                    params.putString("message",postStr);
                         asyncFbRunner.request("me/feed",params,"POST", new PostRequestListener(), null);
                 }
 
                 @Override
                 public void onFacebookError(FacebookError e) {
-                	CommonUtils.showToast(ExtensionActivity.this,getString(R.string.posting_failed));
+                	showToast(ExtensionActivity.this,getString(R.string.posting_failed));
                 }
 
                 @Override
                 public void onError(DialogError e) {
-                	CommonUtils.showToast(ExtensionActivity.this,getString(R.string.posting_failed));
+                	showToast(ExtensionActivity.this,getString(R.string.posting_failed));
                 }
 
 				@Override
@@ -294,30 +298,30 @@ public class ExtensionActivity extends Activity implements OnClickListener {
 	public class PostRequestListener implements AsyncFacebookRunner.RequestListener{
 	    @Override
 	    public void onFacebookError(FacebookError e, Object state) {
-	    	CommonUtils.showToast(ExtensionActivity.this,getString(R.string.posting_failed));
+	    	showToast(ExtensionActivity.this,getString(R.string.posting_failed));
 	    }
 	 
 	    @Override
 	    public void onComplete(String response, Object state) {
-	    	CommonUtils.showToast(ExtensionActivity.this,getString(R.string.posting_completed));
+	    	showToast(ExtensionActivity.this,getString(R.string.posting_completed));
 	    	if(quitAfterSharing) ExtensionActivity.this.finish();
 	    }
 
 		@Override
 		public void onIOException(IOException e, Object state) {
-			CommonUtils.showToast(ExtensionActivity.this,getString(R.string.posting_failed));
+			showToast(ExtensionActivity.this,getString(R.string.posting_failed));
 		}
 
 		@Override
 		public void onFileNotFoundException(FileNotFoundException e,
 				Object state) {
-			CommonUtils.showToast(ExtensionActivity.this,getString(R.string.posting_failed));
+			showToast(ExtensionActivity.this,getString(R.string.posting_failed));
 		}
 
 		@Override
 		public void onMalformedURLException(MalformedURLException e,
 				Object state) {
-			CommonUtils.showToast(ExtensionActivity.this,getString(R.string.posting_failed));
+			showToast(ExtensionActivity.this,getString(R.string.posting_failed));
 		}
 	}
 
@@ -355,6 +359,19 @@ public class ExtensionActivity extends Activity implements OnClickListener {
 		}else{
 			facebook.authorizeCallback(requestCode, resultCode, data);
 		}
+	}
+	
+	public static void showToast(final Context context,final String title){
+		new Thread(new Runnable(){
+			@Override
+			public void run() {
+				handler.post(new Runnable() {
+					public void run() {
+						Toast.makeText(context, title, Toast.LENGTH_LONG).show();
+					}
+				});
+			}
+		}).start();
 	}
 
 }
