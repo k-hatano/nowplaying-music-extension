@@ -19,7 +19,9 @@
     <string name="close">閉じる</string>
     <string name="hello_world">Hello world!</string>
     <string name="menu_settings">設定</string>
-    <string name="title_activity_preferences">設定</string>
+    <string name="title_activity_preferences">NowPlaying Music Extension - 設定</string>
+    <string name="menu_information">曲情報</string>
+    <string name="title_activity_information">NowPlaying Music Extension - 曲情報</string>
     <string name="template_explain">以下のキーワードが使用できます:\n  $t (タイトルと置き換わります)\n  $a (アーティスト名と置き換わります)\n  $l (アルバム名と置き換わります)\n  $d (曲の長さと置き換わります)\n  $y (曲の収録年と置き換わります)</string>
     <string name="template">テンプレート</string>
     <string name="revert">初期値に戻す</string>
@@ -34,5 +36,15 @@
     <string name="send_to_app">アプリに送信</string>
     <string name="posting_completed">投稿が完了しました。</string>
 	<string name="posting_failed">投稿に失敗しました。</string>
+	<string name="info_title">タイトル</string>
+    <string name="info_artist">アーティスト</string>
+    <string name="info_album">アルバム</string>
+    <string name="info_duration">長さ</string>
+    <string name="info_year">収録年</string>
+    <string name="info_trackno">トラック番号</string>
+    <string name="info_composer">作曲者</string>
+    <string name="info_mediatype">メディア形式</string>
+    <string name="info_location">ファイルの場所</string>
+    <string name="info_not_available"> -- </string>
 	
 </resources>

@@ -2,5 +2,6 @@
 <resources>
 
     <color name="darkgray">#333333</color>
+    <color name="lightgray">#999999</color>
 
 </resources>
