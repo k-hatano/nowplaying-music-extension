@@ -62,6 +62,8 @@ public class ExtensionActivity extends Activity implements OnClickListener {
 
 	private Facebook facebook = null;
 	private AsyncFacebookRunner asyncFbRunner = null;
+	
+	Cursor trackCursor;
 
 	Uri trackUri;
 	String uri;
@@ -72,6 +74,8 @@ public class ExtensionActivity extends Activity implements OnClickListener {
 	String duration;
 	String composer;
 	String year;
+	String trackno;
+	String mime;
 
 	String template1;
 	String template2;
@@ -102,20 +106,23 @@ public class ExtensionActivity extends Activity implements OnClickListener {
 		findViewById(R.id.settings).setOnClickListener(this);
 		findViewById(R.id.facebook).setOnClickListener(this);
 
+		applyDefault();
 	}
 
 	@Override
 	public void onResume(){
 		super.onResume();
+		initForm();
 	}
 
 	public void initForm(){
-		Cursor trackCursor = getContentResolver().query(
+		trackCursor = getContentResolver().query(
 				trackUri,
 				new String[] {
 						MediaStore.Audio.Media.TITLE, MediaStore.Audio.Media.ARTIST,
 						MediaStore.Audio.Media.ALBUM, MediaStore.Audio.Media.DURATION,
 						MediaStore.Audio.Media.COMPOSER, MediaStore.Audio.Media.YEAR,
+						MediaStore.Audio.Media.TRACK, MediaStore.Audio.Media.MIME_TYPE,
 						MediaStore.Audio.Media.DATA
 				}, null, null, null);
 
@@ -124,15 +131,12 @@ public class ExtensionActivity extends Activity implements OnClickListener {
 				if (trackCursor.moveToFirst()) {
 
 					// And retrieve the wanted information
-					String tweetContent;
 					SharedPreferences pref=getSharedPreferences(PREF_KEY,Activity.MODE_PRIVATE);
 
 					template1=pref.getString(KEY_TEXT_1,getString(R.string.content_default));
 					template2=pref.getString(KEY_TEXT_2,getString(R.string.content_default_2));
 					template3=pref.getString(KEY_TEXT_3,getString(R.string.content_default_3));
 					quitAfterSharing=pref.getBoolean(KEY_TEXT_QUIT,false);
-
-					tweetContent=pref.getString(KEY_TEXT_1,getString(R.string.content_default));
 
 					Time time = new Time();
 					time.set(trackCursor.getLong(trackCursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DURATION)));
@@ -168,13 +172,29 @@ public class ExtensionActivity extends Activity implements OnClickListener {
 					}finally{
 						if(year==null) year="";
 					}
-					tweetContent=applyTemplate(tweetContent);
-					((TextView)findViewById(R.id.textField)).setText(tweetContent);
+					try{
+						trackno=trackCursor.getString(trackCursor.getColumnIndexOrThrow(MediaStore.Audio.Media.TRACK));
+					}finally{
+						if(trackno==null) trackno="";
+					}
+					try{
+						mime=trackCursor.getString(trackCursor.getColumnIndexOrThrow(MediaStore.Audio.Media.MIME_TYPE));
+					}finally{
+						if(mime==null) mime="";
+					}
 				}
 			} finally {
 				trackCursor.close();
 			}
 		}
+	}
+	
+	public void applyDefault(){
+		String tweetContent;
+		SharedPreferences pref=getSharedPreferences(PREF_KEY,Activity.MODE_PRIVATE);
+		tweetContent=pref.getString(KEY_TEXT_1,getString(R.string.content_default));
+		tweetContent=applyTemplate(tweetContent);
+		((TextView)findViewById(R.id.textField)).setText(tweetContent);
 	}
 
 	public String applyTemplate(String param){
@@ -346,6 +366,21 @@ public class ExtensionActivity extends Activity implements OnClickListener {
 		if(item.getItemId()==R.id.edit_template){
 			Intent intent=new Intent(this,PreferencesActivity.class);
 			intent.setAction(Intent.ACTION_VIEW);
+			startActivity(intent);
+		}
+		if(item.getItemId()==R.id.information){
+			
+			Intent intent=new Intent(this,InformationActivity.class);
+			intent.setAction(Intent.ACTION_VIEW);
+			intent.putExtra("title",title);
+			intent.putExtra("artist",artist);
+			intent.putExtra("album",album);
+			intent.putExtra("duration",duration);
+			intent.putExtra("year",year);
+			intent.putExtra("trackno",trackno);
+			intent.putExtra("composer",composer);
+			intent.putExtra("mime",mime);
+			intent.putExtra("uri",uri);
 			startActivity(intent);
 		}
 		return true;

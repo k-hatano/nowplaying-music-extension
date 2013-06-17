@@ -19,7 +19,9 @@
     <string name="close">Close</string>
     <string name="hello_world">Hello world!</string>
     <string name="menu_settings">Settings</string>
-    <string name="title_activity_preferences">Preferences</string>
+    <string name="title_activity_preferences">NowPlaying Music Extension - Preferences</string>
+    <string name="menu_information">Song Info</string>
+    <string name="title_activity_information">NowPlaying Music Extension - Song Information</string>
     <string name="template_explain">You can use the following keywords:\n  $t (will be replaced with the title of the song)\n  $a (will be replaced with the name of the artist)\n  $l (will be replaced with the title of the album)\n  $d (will be replaced with the duration of the song)\n  $y (will be replaced with the year when the song was recorded)</string>
     <string name="template">Template</string>
     <string name="revert">Revert to default</string>
@@ -34,5 +36,15 @@
     <string name="send_to_app">Send to App</string>
     <string name="posting_completed">Posting Completed</string>
     <string name="posting_failed">Posting Failed</string>
+    <string name="info_title">Title</string>
+    <string name="info_artist">Artist</string>
+    <string name="info_album">Album</string>
+    <string name="info_duration">Duration</string>
+    <string name="info_year">Year</string>
+    <string name="info_trackno">Track No.</string>
+    <string name="info_composer">Composer</string>
+    <string name="info_mediatype">Media Type</string>
+    <string name="info_location">Location of File</string>
+    <string name="info_not_available"> -- </string>
 
 </resources>

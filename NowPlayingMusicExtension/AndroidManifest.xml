@@ -18,12 +18,13 @@
 -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="jp.nita.NowPlayingMusicExtension"
+    android:installLocation="auto"
     android:versionCode="5"
-    android:versionName="1.2" android:installLocation="auto">
+    android:versionName="1.2" >
 
     <!-- Permission required for all infinite extensions -->
     <uses-permission android:name="com.sonyericsson.media.permission.INFINITE_ACCESS" />
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:icon="@drawable/extension_icon"
@@ -56,6 +57,10 @@
         <activity
             android:name="jp.nita.NowPlayingMusicExtension.PreferencesActivity"
             android:label="@string/title_activity_preferences" >
+        </activity>
+        <activity
+            android:name="jp.nita.NowPlayingMusicExtension.InformationActivity"
+            android:label="@string/title_activity_information" >
         </activity>
     </application>
 
