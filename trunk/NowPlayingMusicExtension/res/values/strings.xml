@@ -42,6 +42,7 @@
     <string name="info_duration">Duration</string>
     <string name="info_year">Year</string>
     <string name="info_trackno">Track No.</string>
+    <string name="info_disc">Disc</string>
     <string name="info_composer">Composer</string>
     <string name="info_mediatype">Media Type</string>
     <string name="info_location">Location of File</string>
