@@ -320,7 +320,6 @@
                     android:layout_height="wrap_content"
                     android:layout_span="2"
                     android:background="@color/darkgray"
-                    android:lines="3"
                     android:selectAllOnFocus="true"
                     android:text="@string/info_not_available"
                     android:textAppearance="?android:attr/textAppearanceMedium" />

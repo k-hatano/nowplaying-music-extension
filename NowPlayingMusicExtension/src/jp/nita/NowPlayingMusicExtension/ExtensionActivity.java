@@ -176,6 +176,18 @@ public class ExtensionActivity extends Activity implements OnClickListener {
 						trackno=trackCursor.getString(trackCursor.getColumnIndexOrThrow(MediaStore.Audio.Media.TRACK));
 					}finally{
 						if(trackno==null) trackno="";
+						else{
+							int src;
+							try{
+								src=Integer.parseInt(trackno);
+							}catch(Exception e){
+								src=0;
+							}
+							int disc=src/1000;
+							int trk=src%1000;
+							if(disc>0) trackno=""+trk+" ("+getString(R.string.info_disc)+" "+disc+")";
+							else trackno=""+trk;
+						}
 					}
 					try{
 						mime=trackCursor.getString(trackCursor.getColumnIndexOrThrow(MediaStore.Audio.Media.MIME_TYPE));

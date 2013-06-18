@@ -2,11 +2,9 @@ package jp.nita.NowPlayingMusicExtension;
 
 import android.os.Bundle;
 import android.app.Activity;
-import android.content.Context;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 
 public class InformationActivity extends Activity implements OnClickListener {

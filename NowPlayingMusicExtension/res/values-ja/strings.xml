@@ -42,6 +42,7 @@
     <string name="info_duration">長さ</string>
     <string name="info_year">収録年</string>
     <string name="info_trackno">トラック番号</string>
+    <string name="info_disc">ディスク</string>
     <string name="info_composer">作曲者</string>
     <string name="info_mediatype">メディア形式</string>
     <string name="info_location">ファイルの場所</string>
