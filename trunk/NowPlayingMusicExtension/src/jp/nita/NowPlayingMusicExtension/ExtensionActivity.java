@@ -270,6 +270,7 @@ public class ExtensionActivity extends Activity implements OnClickListener {
 					case 3:
 						Intent intent=new Intent(ExtensionActivity.this,PreferencesActivity.class);
 						intent.setAction(Intent.ACTION_VIEW);
+						intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 						startActivity(intent);
 						break;
 					}
@@ -294,6 +295,7 @@ public class ExtensionActivity extends Activity implements OnClickListener {
 		}else if(arg0==(View)findViewById(R.id.settings)){
 			Intent intent=new Intent(this,PreferencesActivity.class);
 			intent.setAction(Intent.ACTION_VIEW);
+			intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 			startActivity(intent);
 		}else if(arg0==(View)findViewById(R.id.facebook)){
 			
@@ -378,6 +380,7 @@ public class ExtensionActivity extends Activity implements OnClickListener {
 		if(item.getItemId()==R.id.edit_template){
 			Intent intent=new Intent(this,PreferencesActivity.class);
 			intent.setAction(Intent.ACTION_VIEW);
+			intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 			startActivity(intent);
 		}
 		if(item.getItemId()==R.id.information){
@@ -393,6 +396,7 @@ public class ExtensionActivity extends Activity implements OnClickListener {
 			intent.putExtra("composer",composer);
 			intent.putExtra("mime",mime);
 			intent.putExtra("uri",uri);
+			intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 			startActivity(intent);
 		}
 		return true;
