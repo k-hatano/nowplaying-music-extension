@@ -36,6 +36,7 @@
     <string name="send_to_app">アプリに送信</string>
     <string name="posting_completed">投稿が完了しました。</string>
 	<string name="posting_failed">投稿に失敗しました。</string>
+	<string name="posting_cancelled">投稿はキャンセルされました。</string>
 	<string name="info_title">タイトル</string>
     <string name="info_artist">アーティスト</string>
     <string name="info_album">アルバム</string>

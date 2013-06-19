@@ -36,6 +36,7 @@
     <string name="send_to_app">Send to App</string>
     <string name="posting_completed">Posting Completed</string>
     <string name="posting_failed">Posting Failed</string>
+    <string name="posting_cancelled">Posting Cancelled</string>
     <string name="info_title">Title</string>
     <string name="info_artist">Artist</string>
     <string name="info_album">Album</string>

@@ -323,7 +323,7 @@ public class ExtensionActivity extends Activity implements OnClickListener {
 
 				@Override
 				public void onCancel() {
-					
+					showToast(ExtensionActivity.this,getString(R.string.posting_cancelled));
 				}
 			});
 		}
