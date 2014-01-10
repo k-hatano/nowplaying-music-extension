@@ -56,7 +56,9 @@ public class ExtensionActivity extends Activity implements OnClickListener {
 	private static final String KEY_TEXT_1 = "templete";
 	private static final String KEY_TEXT_2 = "templete2";
 	private static final String KEY_TEXT_3 = "templete3";
+	private static final String KEY_TEXT_4 = "templete4";
 	private static final String KEY_TEXT_QUIT = "quitAfterSharing";
+	private static final String KEY_TEXT_URL = "shareAsUrl";
 
 	private static final int PICKUP_SEND_TO_APP = 1;
 
@@ -80,7 +82,9 @@ public class ExtensionActivity extends Activity implements OnClickListener {
 	String template1;
 	String template2;
 	String template3;
+	String template4;
 	boolean quitAfterSharing;
+	boolean shareAsUrl;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -103,6 +107,7 @@ public class ExtensionActivity extends Activity implements OnClickListener {
 		findViewById(R.id.apply).setOnClickListener(this);
 		findViewById(R.id.share).setOnClickListener(this);
 		findViewById(R.id.cancel).setOnClickListener(this);
+		findViewById(R.id.information).setOnClickListener(this);
 		findViewById(R.id.settings).setOnClickListener(this);
 		findViewById(R.id.facebook).setOnClickListener(this);
 
@@ -136,7 +141,9 @@ public class ExtensionActivity extends Activity implements OnClickListener {
 					template1=pref.getString(KEY_TEXT_1,getString(R.string.content_default));
 					template2=pref.getString(KEY_TEXT_2,getString(R.string.content_default_2));
 					template3=pref.getString(KEY_TEXT_3,getString(R.string.content_default_3));
+					template4=pref.getString(KEY_TEXT_4,getString(R.string.content_default_4));
 					quitAfterSharing=pref.getBoolean(KEY_TEXT_QUIT,false);
+					shareAsUrl=pref.getBoolean(KEY_TEXT_URL,true);
 
 					Time time = new Time();
 					time.set(trackCursor.getLong(trackCursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DURATION)));
@@ -233,25 +240,34 @@ public class ExtensionActivity extends Activity implements OnClickListener {
 		((InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
 		if(arg0==(View)findViewById(R.id.tweet)){
 			try {
-				Intent intent = new Intent();
-				intent.setAction(Intent.ACTION_SEND);
-				intent.setType("text/plain");
-				intent.putExtra(Intent.EXTRA_TEXT, ((TextView)findViewById(R.id.textField)).getText().toString());
-				startActivityForResult(intent,PICKUP_SEND_TO_APP);
+				String msg=((TextView)findViewById(R.id.textField)).getText().toString();
+				if(shareAsUrl&&(msg.indexOf("http://")==0||msg.indexOf("https://")==0)){
+					Uri uri=Uri.parse(msg);
+					Intent intent = new Intent(Intent.ACTION_VIEW,uri);
+					startActivityForResult(intent,PICKUP_SEND_TO_APP);
+				}else{
+					Intent intent = new Intent();
+					intent.setAction(Intent.ACTION_SEND);
+					intent.setType("text/plain");
+					intent.putExtra(Intent.EXTRA_TEXT, ((TextView)findViewById(R.id.textField)).getText().toString());
+					startActivityForResult(intent,PICKUP_SEND_TO_APP);
+				}
 			} catch (Exception e) {
 				Log.d("ExampleExtensionActivity", "Error");
 				e.printStackTrace();
 			}
 		}else if(arg0==(View)findViewById(R.id.apply)){
-			CharSequence list[]=new String[4];
+			CharSequence list[]=new String[5];
 			SharedPreferences pref=getSharedPreferences(PREF_KEY,Activity.MODE_PRIVATE);
 			template1=pref.getString(KEY_TEXT_1,getString(R.string.content_default));
 			template2=pref.getString(KEY_TEXT_2,getString(R.string.content_default_2));
 			template3=pref.getString(KEY_TEXT_3,getString(R.string.content_default_3));
+			template4=pref.getString(KEY_TEXT_4,getString(R.string.content_default_4));
 			list[0]="1: "+applyTemplate(template1);
 			list[1]="2: "+applyTemplate(template2);
 			list[2]="3: "+applyTemplate(template3);
-			list[3]=getString(R.string.edit_template);
+			list[3]="4: "+applyTemplate(template4);
+			list[4]=getString(R.string.edit_template);
 			new AlertDialog.Builder(ExtensionActivity.this)
 			.setTitle(getString(R.string.apply_template))
 			.setItems(list,new DialogInterface.OnClickListener(){
@@ -268,6 +284,9 @@ public class ExtensionActivity extends Activity implements OnClickListener {
 						((TextView)findViewById(R.id.textField)).setText(applyTemplate(template3));
 						break;
 					case 3:
+						((TextView)findViewById(R.id.textField)).setText(applyTemplate(template4));
+						break;
+					case 4:
 						Intent intent=new Intent(ExtensionActivity.this,PreferencesActivity.class);
 						intent.setAction(Intent.ACTION_VIEW);
 						intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -292,6 +311,20 @@ public class ExtensionActivity extends Activity implements OnClickListener {
 			}
 		}else if(arg0==(View)findViewById(R.id.cancel)){
 			finish();
+		}else if(arg0==(View)findViewById(R.id.information)){
+			Intent intent=new Intent(this,InformationActivity.class);
+			intent.setAction(Intent.ACTION_VIEW);
+			intent.putExtra("title",title);
+			intent.putExtra("artist",artist);
+			intent.putExtra("album",album);
+			intent.putExtra("duration",duration);
+			intent.putExtra("year",year);
+			intent.putExtra("trackno",trackno);
+			intent.putExtra("composer",composer);
+			intent.putExtra("mime",mime);
+			intent.putExtra("uri",uri);
+			intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			startActivity(intent);
 		}else if(arg0==(View)findViewById(R.id.settings)){
 			Intent intent=new Intent(this,PreferencesActivity.class);
 			intent.setAction(Intent.ACTION_VIEW);

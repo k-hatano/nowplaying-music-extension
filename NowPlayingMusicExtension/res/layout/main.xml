@@ -115,11 +115,18 @@
             android:padding="@dimen/spacing" >
 
             <TableLayout
+                android:id="@+id/tableLayout1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:stretchColumns="0,1" >
 
                 <TableRow>
+                    
+                    <Button
+                        android:id="@+id/information"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/menu_information" />
 
                     <Button
                         android:id="@+id/settings"
@@ -127,14 +134,19 @@
                         android:layout_height="wrap_content"
                         android:text="@string/menu_settings" />
 
-                    <Button
-                        android:id="@+id/cancel"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/close" />
+                    
                 </TableRow>
             </TableLayout>
+            
+            <Button
+            android:id="@+id/cancel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tableLayout1"
+            android:layout_marginTop="16dp"
+            android:text="@string/close" />
         </RelativeLayout>
+        
     </RelativeLayout>
 
 </ScrollView>

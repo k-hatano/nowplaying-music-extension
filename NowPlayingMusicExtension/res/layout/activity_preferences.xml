@@ -4,10 +4,8 @@
     android:layout_height="match_parent" >
 
     <RelativeLayout
-        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        tools:context=".Preferences" >
+        android:layout_height="wrap_content" >
 
         <LinearLayout
             android:id="@+id/linearLayout1"
@@ -38,7 +36,7 @@
                         android:id="@+id/label1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginRight="8dp"
+                        android:layout_marginRight="4dp"
                         android:text="1"
                         android:textAppearance="?android:attr/textAppearanceMedium" />
 
@@ -66,7 +64,7 @@
                         android:id="@+id/label2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginRight="8dp"
+                        android:layout_marginRight="4dp"
                         android:text="2"
                         android:textAppearance="?android:attr/textAppearanceMedium" />
 
@@ -94,12 +92,40 @@
                         android:id="@+id/label3"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginRight="8dp"
+                        android:layout_marginRight="4dp"
                         android:text="3"
                         android:textAppearance="?android:attr/textAppearanceMedium" />
 
                     <EditText
                         android:id="@+id/templete3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ems="10"
+                        android:gravity="top"
+                        android:inputType="textMultiLine"
+                        android:lines="2" />
+
+                </TableRow>
+
+            </TableLayout>
+            
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:stretchColumns="1" >
+
+                <TableRow>
+
+                    <TextView
+                        android:id="@+id/label3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="4dp"
+                        android:text="4"
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                    <EditText
+                        android:id="@+id/templete4"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:ems="10"
@@ -116,12 +142,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/template_explain" />
-
-            <Button
-                android:id="@+id/revert"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/revert" />
+            
+            <CheckBox
+            android:id="@+id/share_as_url"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/spacing"
+            android:text="@string/share_as_url" />
+            
         </LinearLayout>
         
         <LinearLayout
