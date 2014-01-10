@@ -32,6 +32,7 @@
     <string name="confirm_revert">Are you sure you want to revert templates to default?</string>
     <string name="content_default_2">#NowPlaying $t / $a ($d)</string>
     <string name="content_default_3">Listening to $t ($l) by $a #NowPlaying</string>
+    <string name="content_default_4">http://www.google.com/search?q=$t</string>
     <string name="post_to_facebook">Post to Facebook</string>
     <string name="send_to_app">Send to App</string>
     <string name="posting_completed">Posting Completed</string>
@@ -48,5 +49,10 @@
     <string name="info_mediatype">Media Type</string>
     <string name="info_location">Location of File</string>
     <string name="info_not_available"> -- </string>
+    <string name="share_as_url">Share text beginning with "http://" as URL</string>
+    <string name="as_music_file">As music file</string>
+    <string name="as_binary_file">As binary file</string>
+    <string name="copy">Copy</string>
+    <string name="copied">Copied </string>
 
 </resources>

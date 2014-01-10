@@ -32,6 +32,7 @@
     <string name="confirm_revert">テンプレートを初期値に戻しますか?</string>
     <string name="content_default_2">#NowPlaying $t / $a ($d)</string>
     <string name="content_default_3">Listening to $t ($l) by $a #NowPlaying</string>
+    <string name="content_default_4">http://www.google.com/search?q=$t</string>
     <string name="post_to_facebook">Facebookに投稿</string>
     <string name="send_to_app">アプリに送信</string>
     <string name="posting_completed">投稿が完了しました。</string>
@@ -48,5 +49,10 @@
     <string name="info_mediatype">メディア形式</string>
     <string name="info_location">ファイルの場所</string>
     <string name="info_not_available"> -- </string>
+    <string name="share_as_url">"http://"で始まるテキストはURLとして共有する</string>
+    <string name="as_music_file">音楽ファイルとして</string>
+    <string name="as_binary_file">バイナリファイルとして</string>
+    <string name="copy">コピー</string>
+    <string name="copied">以下のテキストをコピーしました:</string>
 	
 </resources>
