@@ -54,5 +54,6 @@
     <string name="as_binary_file">バイナリファイルとして</string>
     <string name="copy">コピー</string>
     <string name="copied">以下のテキストをコピーしました:</string>
+    <string name="search">検索</string>
 	
 </resources>

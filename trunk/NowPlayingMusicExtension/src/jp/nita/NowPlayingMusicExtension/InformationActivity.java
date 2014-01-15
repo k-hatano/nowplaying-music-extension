@@ -3,6 +3,7 @@ package jp.nita.NowPlayingMusicExtension;
 import android.os.Bundle;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.SearchManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -19,12 +20,17 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class InformationActivity extends Activity implements OnClickListener {
+	
+	boolean quitAfterSharing;
+	
+	public static final int PICKUP_SEARCH = 3;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_information);
 		
+		findViewById(R.id.copy).setOnClickListener(this);
 		findViewById(R.id.ok).setOnClickListener(this);
 		
 		String title=getIntent().getExtras().getString("title");
@@ -72,20 +78,55 @@ public class InformationActivity extends Activity implements OnClickListener {
 		return true;
 	}
 	
+	public boolean copy(){
+		CharSequence list[]=new String[3];
+		list[0]=""+getIntent().getExtras().getString("title");
+		list[1]=""+getIntent().getExtras().getString("artist");
+		list[2]=""+getIntent().getExtras().getString("album");
+		new AlertDialog.Builder(InformationActivity.this)
+		.setTitle(getString(R.string.copy))
+		.setItems(list,new DialogInterface.OnClickListener(){
+			@Override
+			public void onClick(DialogInterface arg0, int arg1) {
+				ClipboardManager clipboard=(ClipboardManager)getSystemService(CLIPBOARD_SERVICE);
+				String str="";
+				switch(arg1){
+				case 0:
+					str=getIntent().getExtras().getString("title");
+					break;
+				case 1:
+					str=getIntent().getExtras().getString("artist");
+					break;
+				case 2:
+					str=getIntent().getExtras().getString("album");
+					break;
+				}
+				clipboard.setText(str);
+				ExtensionActivity.showToast(InformationActivity.this, ""+getString(R.string.copied)+" "+str);
+			}
+		}).show();
+		return true;
+	}
+	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		if(item.getItemId()==R.id.copy){
-			CharSequence list[]=new String[4];
+		if(item.getItemId()==R.id.menu_copy){
+			copy();
+		}
+		/*
+		if(item.getItemId()==R.id.menu_search){
+			SharedPreferences pref=getSharedPreferences(ExtensionActivity.PREF_KEY,Activity.MODE_PRIVATE);
+			quitAfterSharing=pref.getBoolean(ExtensionActivity.KEY_TEXT_QUIT,false);
+			
+			CharSequence list[]=new String[3];
 			list[0]=""+getIntent().getExtras().getString("title");
 			list[1]=""+getIntent().getExtras().getString("artist");
 			list[2]=""+getIntent().getExtras().getString("album");
-			list[3]=""+getIntent().getExtras().getString("uri");
 			new AlertDialog.Builder(InformationActivity.this)
-			.setTitle(getString(R.string.copy))
+			.setTitle(getString(R.string.search))
 			.setItems(list,new DialogInterface.OnClickListener(){
 				@Override
 				public void onClick(DialogInterface arg0, int arg1) {
-					ClipboardManager clipboard=(ClipboardManager)getSystemService(CLIPBOARD_SERVICE);
 					String str="";
 					switch(arg1){
 					case 0:
@@ -97,15 +138,15 @@ public class InformationActivity extends Activity implements OnClickListener {
 					case 2:
 						str=getIntent().getExtras().getString("album");
 						break;
-					case 3:
-						str=getIntent().getExtras().getString("uri");
-						break;
 					}
-					clipboard.setText(str);
-					ExtensionActivity.showToast(InformationActivity.this, ""+getString(R.string.copied)+" "+str);
+					Intent intent=new Intent(Intent.ACTION_WEB_SEARCH);
+					intent.putExtra(SearchManager.QUERY, str);
+					startActivityForResult(intent,PICKUP_SEARCH);
 				}
 			}).show();
+			
 		}
+		*/
 		return true;
 	}
 	
@@ -113,6 +154,9 @@ public class InformationActivity extends Activity implements OnClickListener {
 	public void onClick(View arg0) {
 		if(arg0==(View)findViewById(R.id.ok)){
 			finish();
+		}
+		if(arg0==(View)findViewById(R.id.copy)){
+			copy();
 		}
 	}
 

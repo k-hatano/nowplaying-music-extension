@@ -109,46 +109,12 @@
 
             </TableLayout>
             
-            <TableLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:stretchColumns="1" >
-
-                <TableRow>
-
-                    <TextView
-                        android:id="@+id/label3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="4dp"
-                        android:text="4"
-                        android:textAppearance="?android:attr/textAppearanceMedium" />
-
-                    <EditText
-                        android:id="@+id/templete4"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:ems="10"
-                        android:gravity="top"
-                        android:inputType="textMultiLine"
-                        android:lines="2" />
-
-                </TableRow>
-
-            </TableLayout>
 
             <TextView
                 android:id="@+id/textView2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/template_explain" />
-            
-            <CheckBox
-            android:id="@+id/share_as_url"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/spacing"
-            android:text="@string/share_as_url" />
             
         </LinearLayout>
         
@@ -165,20 +131,27 @@
             android:layout_margin="@dimen/spacing"
             android:text="@string/quit_after_sharing" />
         </LinearLayout>
-
+        
         <LinearLayout
+            android:id="@+id/revert_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
             android:layout_below="@+id/auto_quit_layout"
             android:layout_margin="@dimen/spacing"
-            android:gravity="top"
+            android:orientation="vertical"
             android:padding="@dimen/spacing" >
 
+            <Button
+                android:id="@+id/revert"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/revert" />
+            
             <Button
                 android:id="@+id/ok"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
                 android:text="@string/ok" />
         </LinearLayout>
 

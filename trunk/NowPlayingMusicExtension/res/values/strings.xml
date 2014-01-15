@@ -54,5 +54,6 @@
     <string name="as_binary_file">As binary file</string>
     <string name="copy">Copy</string>
     <string name="copied">Copied </string>
+    <string name="search">Search</string>
 
 </resources>
