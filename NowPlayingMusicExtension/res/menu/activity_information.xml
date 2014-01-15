@@ -2,9 +2,17 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <item
-        android:id="@+id/copy"
+        android:id="@+id/menu_copy"
         android:icon="@android:drawable/ic_menu_agenda"
         android:title="@string/copy">
     </item>
+    
+    <!-- 
+    <item
+        android:id="@+id/menu_search"
+        android:icon="@android:drawable/ic_menu_agenda"
+        android:title="@string/search">
+    </item>
+     -->
 
 </menu>
